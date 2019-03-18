@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hrt2201
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        task: hrt2201 
+        k8s-app: hrt2201
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: ttu137
+      containers:
+      - name: hrt2201
+        image: 192.168.1.136/test22/hrt2201:v1.0.0
+        imagePullPolicy: IfNotPresent
+        command: [ "/home/hrt2201" ]
+        ports:
+        - containerPort: 2404
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+  name: hrt2201
+spec:
+  type: NodePort
+  ports:
+  - port: 2404
+    nodePort: 32400
+    protocol: TCP
+  selector:
+    k8s-app: hrt2201

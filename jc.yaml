@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jc
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        task: jc 
+        k8s-app: jc
+    spec:
+      nodeSelector:
+         beta.kubernetes.io/arch: arm
+      containers:
+      - name: jc
+        image: 192.168.1.136/test22/httpd-arm:v1
+        imagePullPolicy: IfNotPresent
+        command: [ "/home/http-arm", "jiao cai" ]
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+  name: jc
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    nodePort: 30081
+    protocol: TCP
+  selector:
+    k8s-app: jc

@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: pt-104-daemonset
+  labels:
+    app: pt-104-daemonset
+    version: v1
+spec:
+  template:
+    metadata:
+      labels:
+        name: pt-104-daemonset
+        app: pt-104-daemonset
+        version: v1
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/arch: arm
+      containers:
+      - name: pt-104
+        image: 119.3.230.242/apps/pt-104:v1.0
+        imagePullPolicy: IfNotPresent
+

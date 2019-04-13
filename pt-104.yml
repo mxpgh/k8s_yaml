@@ -1,0 +1,35 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: pt-104
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        task: pt-104
+        k8s-app: pt-104
+    spec:
+      nodeSelector:
+         beta.kubernetes.io/arch: arm
+      containers:
+      - name: pt-104
+        image: 119.3.230.242/apps/pt-104:v1.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+  name: pt-104
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    nodePort: 30081
+    protocol: TCP
+  selector:
+    k8s-app: pt-104

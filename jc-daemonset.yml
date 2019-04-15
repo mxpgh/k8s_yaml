@@ -1,0 +1,39 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: jc-daemonset
+  labels:
+    app: jc-daemonset
+    version: v1
+spec:
+  template:
+    metadata:
+      labels:
+        name: jc-daemonset
+        app: jc-daemonset
+        version: v1
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/arch: arm
+      containers:
+      - name: jc
+        image: 119.3.230.242/apps/jiaocai:v2.0
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: gpio
+          mountPath: /dev/gpio
+        - name: adc0
+          mountPath: /dev/adc0
+        - name: eeprom
+          mountPath: /sys/bus/i2c/devices/2-0052/eeprom
+      volumes:
+        - name: gpio
+          hostPath:
+            path: /dev/gpio
+        - name: adc0
+          hostPath:
+            path: /dev/adc0
+        - name: eeprom
+          hostPath: 
+            path: /sys/bus/i2c/devices/2-0052/eeprom
+

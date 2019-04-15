@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: yc-daemonset
+  labels:
+    app: yc-daemonset
+    version: v1
+spec:
+  template:
+    metadata:
+      labels:
+        name: yc-daemonset
+        app: yc-daemonset
+        version: v1
+    spec:
+      nodeSelector:
+        beta.kubernetes.io/arch: arm
+      containers:
+      - name: yc
+        image: 119.3.230.242/apps/yongcai:v2.0
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+        - name: ttymxc3
+          mountPath: /dev/ttymxc3
+      volumes:
+        - name: ttymxc3
+          hostPath:
+            path: /dev/ttymxc3

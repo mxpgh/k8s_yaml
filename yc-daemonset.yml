@@ -17,12 +17,19 @@ spec:
         beta.kubernetes.io/arch: arm
       containers:
       - name: yc
-        image: 119.3.230.242/apps/yongcai:v2.0
+        image: 119.3.230.242/apps/yongcai:v2.1
         imagePullPolicy: IfNotPresent
+        securityContext: 
+          privileged: true 
         volumeMounts:
         - name: ttymxc3
           mountPath: /dev/ttymxc3
+        - name: config
+          mountPath: /home
       volumes:
         - name: ttymxc3
           hostPath:
             path: /dev/ttymxc3
+        - name: config
+          hostPath:
+            path: /home

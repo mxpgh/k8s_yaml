@@ -19,6 +19,8 @@ spec:
       - name: jc
         image: 119.3.230.242/apps/jiaocai:v2.0
         imagePullPolicy: IfNotPresent
+        securityContext: 
+          privileged: true 
         volumeMounts:
         - name: gpio
           mountPath: /dev/gpio

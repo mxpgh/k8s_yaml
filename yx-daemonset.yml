@@ -1,24 +1,26 @@
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
-  name: yx-daemonset
+  name: yx-v1-daemonset
   labels:
-    app: yx-daemonset
+    app: yx-v1-daemonset
     version: v1
 spec:
   template:
     metadata:
       labels:
-        name: yx-daemonset
-        app: yx-daemonset
+        name: yx-v1-daemonset
+        app: yx-v1-daemonset
         version: v1
     spec:
       nodeSelector:
         beta.kubernetes.io/arch: arm
       containers:
-      - name: yx
+      - name: yx-v1
         image: 119.3.230.242/apps/yaoxin:v2.0
         imagePullPolicy: IfNotPresent
+        securityContext:
+          privileged: true
         volumeMounts:
         - name: yx-gpio
           mountPath: /dev/yx-gpio
